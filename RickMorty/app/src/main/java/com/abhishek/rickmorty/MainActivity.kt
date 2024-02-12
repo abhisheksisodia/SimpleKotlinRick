@@ -17,7 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.abhishek.networking.KtorClient
-import com.abhishek.networking.Character
+import com.abhishek.networking.models.domain.Character
 import com.abhishek.rickmorty.ui.theme.RickMortyTheme
 import kotlinx.coroutines.delay
 
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(key1 = Unit, block = {
                 delay(3000)
-                character = ktorClient.getCharacter(55)
+                character = ktorClient.getCharacter(25)
             })
 
             RickMortyTheme {
@@ -44,7 +44,6 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Column {
                         Greeting("Android")
-
                         Text(text = character?.name ?: "No character")
                     }
                 }

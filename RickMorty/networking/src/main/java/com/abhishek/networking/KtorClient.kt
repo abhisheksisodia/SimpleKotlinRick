@@ -10,8 +10,10 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import com.abhishek.networking.models.domain.Character
+import com.abhishek.networking.models.remote.RemoteCharacter
+import com.abhishek.networking.models.remote.toDomainCharacter
 
 class KtorClient {
     private val client = HttpClient(OkHttp) {
@@ -29,18 +31,8 @@ class KtorClient {
     }
 
     suspend fun getCharacter(id: Int): Character {
-        return client.get("character/$id").body()
+        return client.get("character/$id")
+            .body<RemoteCharacter>()
+            .toDomainCharacter()
     }
-}
-
-@Serializable
-data class Character(
-    val id: Int,
-    val name: String,
-    val origin: Origin
-) {
-    @Serializable
-    data class Origin(
-        val name: String
-    )
 }
