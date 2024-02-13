@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = "character_details") {
                             CharacterDetailsScreen(
                                 ktorClient = ktorClient,
-                                characterId = 4
+                                characterId = (0..1000).random()
                             ) {
                                 navController.navigate("character_episodes/$it")
                             }
