@@ -10,19 +10,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.abhishek.networking.models.domain.CharacterStatus
 import com.abhishek.rickmorty.components.CharacterStatusComponent
+import com.abhishek.rickmorty.components.common.CharacterNameComponent
 import com.abhishek.rickmorty.ui.theme.RickAction
 
 @Composable
 fun CharacterDetailsNamePlateComponent(name: String, status: CharacterStatus) {
     Column(modifier = Modifier.fillMaxWidth()) {
         CharacterStatusComponent(characterStatus = status)
-        Text(
-            text = name,
-            fontSize = 42.sp,
-            lineHeight = 42.sp,
-            fontWeight = FontWeight.Bold,
-            color = RickAction
-        )
+        CharacterNameComponent(name = name)
     }
 }
 

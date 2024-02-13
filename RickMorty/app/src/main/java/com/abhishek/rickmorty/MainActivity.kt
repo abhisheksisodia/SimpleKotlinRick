@@ -20,6 +20,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.abhishek.networking.KtorClient
 import com.abhishek.rickmorty.screens.CharacterDetailsScreen
+import com.abhishek.rickmorty.screens.CharacterEpisodeScreen
 import com.abhishek.rickmorty.ui.theme.RickAction
 import com.abhishek.rickmorty.ui.theme.RickPrimary
 import com.abhishek.rickmorty.ui.theme.RickMortyTheme
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             val navController = rememberNavController()
 
             RickMortyTheme {
@@ -43,28 +45,27 @@ class MainActivity : ComponentActivity() {
                         composable(route = "character_details") {
                             CharacterDetailsScreen(
                                 ktorClient = ktorClient,
-                                characterId = 145
+                                characterId = 4
                             ) {
                                 navController.navigate("character_episodes/$it")
                             }
                         }
                         composable(
                             route = "character_episodes/{characterId}",
-                            arguments = listOf(navArgument("characterId") { type = NavType.IntType })
+                            arguments = listOf(navArgument("characterId") {
+                                type = NavType.IntType
+                            })
                         ) { backStackEntry ->
-                            val characterId: Int = backStackEntry.arguments?.getInt("characterId") ?: -1
-                            CharacterEpisodeScreen(characterId = characterId)
+                            val characterId: Int =
+                                backStackEntry.arguments?.getInt("characterId") ?: -1
+                            CharacterEpisodeScreen(
+                                characterId = characterId,
+                                ktorClient = ktorClient
+                            )
                         }
                     }
                 }
             }
-        }
-    }
-
-    @Composable
-    fun CharacterEpisodeScreen(characterId: Int) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = "Character episode screen: $characterId", fontSize = 28.sp, color = RickAction)
         }
     }
 }
