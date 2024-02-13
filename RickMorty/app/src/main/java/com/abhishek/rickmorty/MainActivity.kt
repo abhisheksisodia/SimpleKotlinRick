@@ -24,10 +24,14 @@ import com.abhishek.rickmorty.screens.CharacterEpisodeScreen
 import com.abhishek.rickmorty.ui.theme.RickAction
 import com.abhishek.rickmorty.ui.theme.RickPrimary
 import com.abhishek.rickmorty.ui.theme.RickMortyTheme
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val ktorClient = KtorClient()
+    @Inject
+    lateinit var ktorClient: KtorClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +49,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = "character_details") {
                             CharacterDetailsScreen(
                                 ktorClient = ktorClient,
-                                characterId = (0..1000).random()
+                                characterId = (0..100).random()
                             ) {
                                 navController.navigate("character_episodes/$it")
                             }
